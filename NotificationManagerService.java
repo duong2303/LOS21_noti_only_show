@@ -7502,6 +7502,11 @@ public class NotificationManagerService extends SystemService {
             final int callingUid, final int callingPid, final String tag, final int id,
             final Notification notification, int incomingUserId, boolean postSilently,
             PostNotificationTracker tracker, boolean byForegroundService) {
+        List<String> allowedApps = Arrays.asList("com.chek.app", "com.goghost.app");
+        if (!allowedApps.contains(pkg)) {
+            Slog.w(TAG, "Notification from package " + pkg + " is blocked.");
+            return false;
+        }
         if (DBG) {
             Slog.v(TAG, "enqueueNotificationInternal: pkg=" + pkg + " id=" + id
                     + " notification=" + notification);
